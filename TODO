@@ -1,0 +1,27 @@
+FUNCIONALITY
+	- Text editor
+		- Type
+		- Select
+		- Copy & Paste
+	- Autofill
+	- Custom Syntax Highlights
+	- Colour picker
+	- Error Checking
+	- Bookmark lines
+	- TODO
+		- Highlighted
+		- Checklist
+	- Declariation navigation
+	- Live website editing (HTML)
+	- Bash and SSH support
+	- Hotkeys
+		- Ctrl + / (Comment)
+		- Ctrl + B (Build/Compile)
+
+LANGUAGE SUPPORT
+	- C
+	- Python
+	- Java
+	- C++
+	- C#
+	- Brainfuck

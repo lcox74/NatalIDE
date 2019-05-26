@@ -1,13 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <assert.h>
+#include "globals.h"
 
-#include "SDL2/SDL.h"
-
-#define SCREEN_WIDTH 1024
-#define SCREEN_HEIGHT 576
-
-typedef Uint32 u32;
+#include "natWin.h"
 
 int main(int argc, char *argv[])
 {
@@ -25,14 +18,16 @@ int main(int argc, char *argv[])
 										   SDL_RENDERER_SOFTWARE);
 	assert(ren);
 	
-	SDL_Texture *screen = SDL_CreateTexture(ren, 
-											SDL_PIXELFORMAT_RGB888, 
+	SDL_PixelFormat *format = SDL_AllocFormat(SDL_PIXELFORMAT_RGB888);
+	SDL_Texture *screen = SDL_CreateTexture(ren, format->format, 
 											SDL_TEXTUREACCESS_STREAMING, 
 											SCREEN_WIDTH, SCREEN_HEIGHT);
 	assert(screen);
 
 	u32 *screen_pixels = (u32*) calloc(SCREEN_WIDTH * SCREEN_HEIGHT, sizeof(u32));
 	assert(screen_pixels);
+
+	natWin projView = natWin(screen_pixels, "Proj");
 
 	bool running = true;
 	while (running)
@@ -46,6 +41,8 @@ int main(int argc, char *argv[])
 				break;
 			}
 		}
+
+		projView.clear(SDL_MapRGB(format, 255, 255, 255));
 
 		SDL_UpdateTexture(screen, NULL, screen_pixels, SCREEN_WIDTH * sizeof(u32));
 		SDL_RenderClear(ren);
