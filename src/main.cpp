@@ -1,6 +1,6 @@
 #include "globals.h"
 
-#include "natWin.h"
+#include "Graphics/Windows/subWindows.h"
 
 int main(int argc, char *argv[])
 {
@@ -27,22 +27,53 @@ int main(int argc, char *argv[])
 	u32 *screen_pixels = (u32*) calloc(SCREEN_WIDTH * SCREEN_HEIGHT, sizeof(u32));
 	assert(screen_pixels);
 
-	natWin projView = natWin(screen_pixels, "Proj");
+	std::vector<natWin*> subWins;
+	subWins.push_back(new projectView(screen_pixels, "Proj"));
+	subWins.push_back(new toolBar(screen_pixels, "tool"));
 
+	Nat_Event *Nat_event = new Nat_Event();
+	int temp = 0;
 	bool running = true;
 	while (running)
 	{
 		SDL_Event event;
+
+		if (Nat_event->mouseState == -1)
+			Nat_event->mouseState = 0;
+		if (Nat_event->mouseState == 1)
+			Nat_event->mouseState = 2;
+
+		Nat_event->prev();
+		
 		while (SDL_PollEvent(&event))
 		{
-			if (event.type == SDL_QUIT) 
+			Nat_event->setEvent(event);
+
+			if (event.type == SDL_MOUSEMOTION)
+				SDL_GetMouseState( &Nat_event->x, &Nat_event->y );
+			else if (event.type == SDL_MOUSEBUTTONDOWN)
+				Nat_event->mouseState = (Nat_event->mouseState == 1) ? 2 : 1;
+			else if (event.type == SDL_MOUSEBUTTONUP)
+				Nat_event->mouseState = -1;
+			else if (event.type == SDL_QUIT) 
 			{
 				running = false;
 				break;
 			}
-		}
 
-		projView.clear(SDL_MapRGB(format, 255, 255, 255));
+			for ( auto w: subWins )
+				w->event(Nat_event);
+		}
+		Nat_event->diff();
+
+		// Clear screen
+		Colour clearColour = Colour(20, 20, 20);
+		for (int i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; i++)
+			screen_pixels[i] = clearColour.getUint32();
+
+		// Render Sub Windows
+		for ( auto w: subWins )
+			w->render();
 
 		SDL_UpdateTexture(screen, NULL, screen_pixels, SCREEN_WIDTH * sizeof(u32));
 		SDL_RenderClear(ren);

@@ -1,6 +1,6 @@
 CPP = g++.exe
 LIBS = -L"Dependencies/SDL2/lib"
-INCS = -I"Dependencies/SDL2/include"
+INCS = -I"Dependencies/SDL2/include" -I"src"
 FLAGS = -lmingw32 -lSDL2main -lSDL2
 BIN = bin/NatalIDE.exe
 WINDOWS = -mwindows #Add to get rid of command console
