@@ -12,7 +12,7 @@ public:
 		screen_pixels = screenPixels;
 		sName = winName;
 		x = x1;
-		y = y1;
+		y = (y1 < 20) ? 20 : y1;
 		width = w;
 		height = h;
 	}
@@ -44,7 +44,7 @@ public:
 		clear(clearColour);
 	}
 
-	Colour clearColour = Colour(0xFFFFFFFF);
+	Colour clearColour = Colour(0xFF444444);
 	bool dragging = false;
 	int clickX, clickY;
 };
