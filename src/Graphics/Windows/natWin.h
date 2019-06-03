@@ -8,7 +8,7 @@ class natWin
 public:
 	void draw (int x1, int y1, Colour c)
 	{
-		assert(screen_pixels);
+		FATAL_ASSERT(screen_pixels);
 		if ((x1 + this->x) < 0 || (x1 + this->x) > SCREEN_WIDTH || (y1 + this->y) < 0 || (y1 + this->y) > SCREEN_HEIGHT)
 			return;
 		screen_pixels[(y1 + this->y) * SCREEN_WIDTH + (x1 + this->x)] = c.getUint32();
@@ -16,7 +16,7 @@ public:
 
 	void clear (Colour c = Colour(255, 255, 255)) 
 	{
-		assert(screen_pixels);
+		FATAL_ASSERT(screen_pixels);
 		for (int x1 = 0; x1 < width; x1++)
 			for (int y1 = 0; y1 < height; y1++)
 				draw(x1, y1, c);
@@ -24,7 +24,7 @@ public:
 
 	void fill (int x1, int y1, int x2, int y2, Colour c) 
 	{
-		assert(screen_pixels);
+		FATAL_ASSERT(screen_pixels);
 		for (int X = x1; X < x2; X++)
 			for (int Y = y1; Y < y2; Y++)
 				draw(X, Y, c);

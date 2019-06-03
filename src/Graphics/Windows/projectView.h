@@ -13,8 +13,8 @@ public:
 		sName = winName;
 		x = x1;
 		y = (y1 < 20) ? 20 : y1;
-		width = w;
-		height = h;
+		width = (w > SCREEN_WIDTH) ? SCREEN_WIDTH : w;
+		height = (h > SCREEN_HEIGHT) ? h - 20 : h;
 	}
 	~projectView () { }
 
@@ -41,6 +41,7 @@ public:
 
 	void render () override
 	{
+		y = (y < 20) ? 20 : y;
 		clear(clearColour);
 	}
 

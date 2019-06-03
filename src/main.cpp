@@ -11,25 +11,25 @@ int main(int argc, char *argv[])
 									   SDL_WINDOWPOS_UNDEFINED, 
 									   SCREEN_WIDTH, SCREEN_HEIGHT, 
 									   0); // Flags (Fullscreen here)
-	assert(win);
+	FATAL_ASSERT(win);
 
 	SDL_Renderer *ren = SDL_CreateRenderer(win, 
 										   0, 
 										   SDL_RENDERER_SOFTWARE);
-	assert(ren);
+	FATAL_ASSERT(ren);
 	
 	SDL_PixelFormat *format = SDL_AllocFormat(SDL_PIXELFORMAT_RGB888);
 	SDL_Texture *screen = SDL_CreateTexture(ren, format->format, 
 											SDL_TEXTUREACCESS_STREAMING, 
 											SCREEN_WIDTH, SCREEN_HEIGHT);
-	assert(screen);
+	FATAL_ASSERT(screen);
 
 	u32 *screen_pixels = (u32*) calloc(SCREEN_WIDTH * SCREEN_HEIGHT, sizeof(u32));
-	assert(screen_pixels);
+	FATAL_ASSERT(screen_pixels);
 
 	std::vector<natWin*> subWins;
-	subWins.push_back(new projectView(screen_pixels, "Proj"));
-	subWins.push_back(new toolBar(screen_pixels, "tool"));
+	subWins.push_back(new projectView(screen_pixels, "ProjectView"));
+	subWins.push_back(new toolBar(screen_pixels, "ToolBar"));
 
 	Nat_Event *Nat_event = new Nat_Event();
 	int temp = 0;
