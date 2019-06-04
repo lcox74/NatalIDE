@@ -7,7 +7,7 @@
 class projectView : public natWin
 {
 public:
-	projectView (u32 *screenPixels, char const *winName, int x1 = 0, int y1 = 0, int w = 100, int h = 100)
+	projectView (Uint32 *screenPixels, char const *winName, int x1 = 0, int y1 = 0, int w = 100, int h = 100)
 	{
 		screen_pixels = screenPixels;
 		sName = winName;

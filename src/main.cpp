@@ -4,7 +4,9 @@
 
 int main(int argc, char *argv[])
 {
-	SDL_Init(SDL_INIT_VIDEO);
+	FATAL_ASSERT(SDL_Init(SDL_INIT_VIDEO) == 0);
+	FATAL_ASSERT(IMG_Init(IMG_INIT_PNG) == IMG_INIT_PNG);
+	FATAL_ASSERT(TTF_Init() != -1);
 
 	SDL_Window *win =SDL_CreateWindow("NatalIDE", 
 									   SDL_WINDOWPOS_UNDEFINED, 
@@ -13,7 +15,7 @@ int main(int argc, char *argv[])
 									   0); // Flags (Fullscreen here)
 	FATAL_ASSERT(win);
 
-	SDL_Renderer *ren = SDL_CreateRenderer(win, 
+	ren = SDL_CreateRenderer(win, 
 										   0, 
 										   SDL_RENDERER_SOFTWARE);
 	FATAL_ASSERT(ren);
@@ -24,7 +26,7 @@ int main(int argc, char *argv[])
 											SCREEN_WIDTH, SCREEN_HEIGHT);
 	FATAL_ASSERT(screen);
 
-	u32 *screen_pixels = (u32*) calloc(SCREEN_WIDTH * SCREEN_HEIGHT, sizeof(u32));
+	Uint32 *screen_pixels = (Uint32*) calloc(SCREEN_WIDTH * SCREEN_HEIGHT, sizeof(Uint32));
 	FATAL_ASSERT(screen_pixels);
 
 	std::vector<natWin*> subWins;
@@ -75,11 +77,18 @@ int main(int argc, char *argv[])
 		for ( auto w: subWins )
 			w->render();
 
-		SDL_UpdateTexture(screen, NULL, screen_pixels, SCREEN_WIDTH * sizeof(u32));
+		SDL_UpdateTexture(screen, NULL, screen_pixels, SCREEN_WIDTH * sizeof(Uint32));
 		SDL_RenderClear(ren);
 		SDL_RenderCopy(ren, screen, NULL, NULL);
 		SDL_RenderPresent(ren);
 	}
+
+	SDL_DestroyRenderer(ren);
+	SDL_DestroyWindow(win);
+
+	TTF_Quit();
+	IMG_Quit();
+	SDL_Quit();
 
 	return 1;
 }

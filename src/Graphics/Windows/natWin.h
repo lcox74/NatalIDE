@@ -35,7 +35,7 @@ public:
 
 	char const *sName;
 	int x, y, width, height;
-	u32 *screen_pixels;
+	Uint32 *screen_pixels;
 };
 
 #endif // NATALIDE_NATWIN_H_

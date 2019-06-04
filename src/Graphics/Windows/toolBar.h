@@ -7,7 +7,7 @@
 class toolBar : public natWin
 {
 public:
-	toolBar (u32 *screenPixels, char const *winName)
+	toolBar (Uint32 *screenPixels, char const *winName)
 	{
 		screen_pixels = screenPixels;
 		sName = winName;
@@ -15,6 +15,7 @@ public:
 		y = 0;
 		width = SCREEN_WIDTH;
 		height = 20;
+
 	}
 	~toolBar () { }
 
@@ -30,9 +31,13 @@ public:
 	void render () override
 	{
 		clear(clearColour);
+
+		
+		text.display(20, 20);
 	}
 
 	Colour clearColour = Colour(0xFFFFFFFF);
+	Text text = Text("res/Fonts/OpenSans/OpenSansRegular.ttf", 30, "Hello, World!", Colour(255, 0, 255));
 };
 
 #endif // NATALIDE_TOOLBAR_H_

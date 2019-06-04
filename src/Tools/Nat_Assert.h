@@ -23,7 +23,7 @@
 #endif
 
 
-void fAssert (bool logic, const char *file, int line, const char *func)
+void _fAssert (bool logic, const char *file, int line, const char *func)
 {
 	if (!logic)
 	{
@@ -40,7 +40,7 @@ void fAssert (bool logic, const char *file, int line, const char *func)
 	}
 }
 
-void wAssert (bool logic, const char *file, int line, const char *func)
+void _wAssert (bool logic, const char *file, int line, const char *func)
 {
 	if (!logic)
 	{
@@ -53,7 +53,7 @@ void wAssert (bool logic, const char *file, int line, const char *func)
 	}
 }
 
-void lAssert (bool logic, const char *file, int line, const char *func)
+void _lAssert (bool logic, const char *file, int line, const char *func)
 {
 	if (!logic)
 	{
@@ -67,8 +67,8 @@ void lAssert (bool logic, const char *file, int line, const char *func)
 }
 
 
-#define FATAL_ASSERT(logic) fAssert(logic, __FILE__, __LINE__, __PRETTY_FUNCTION__)
-#define WARN_ASSERT(logic) wAssert(logic, __FILE__, __LINE__, __PRETTY_FUNCTION__)
-#define LOG_ASSERT(logic) lAssert(logic, __FILE__, __LINE__, __PRETTY_FUNCTION__)
+#define FATAL_ASSERT(logic) _fAssert(logic, __FILE__, __LINE__, __PRETTY_FUNCTION__)
+#define WARN_ASSERT(logic) _wAssert(logic, __FILE__, __LINE__, __PRETTY_FUNCTION__)
+#define LOG_ASSERT(logic) _lAssert(logic, __FILE__, __LINE__, __PRETTY_FUNCTION__)
 
 #endif // NATALIDE_NAT_ASSERT_H_

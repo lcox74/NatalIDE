@@ -7,7 +7,7 @@ public:
 	Colour(int R, int G, int B, int A = 255)
 		: r(R), g(G), b(B) { }
 
-	Colour(u32 hex) 
+	Colour(Uint32 hex) 
 	{
 		a = (hex & 0xFF000000) >> 24;
 		r = (hex & 0x00FF0000) >> 16;
@@ -16,9 +16,9 @@ public:
 	}
 	~Colour() { }
 
-	u32 getUint32 () 
+	Uint32 getUint32 () 
 	{
-		u32 temp = (a << 24) + (r << 16) + (g << 8) + (b << 0);
+		Uint32 temp = (a << 24) + (r << 16) + (g << 8) + (b << 0);
 		return temp;
 	}
 
