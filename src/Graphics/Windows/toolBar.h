@@ -33,11 +33,10 @@ public:
 		clear(clearColour);
 
 		
-		text.display(20, 20);
+		drawText(5, 1, "File", 13);
 	}
 
 	Colour clearColour = Colour(0xFFFFFFFF);
-	Text text = Text("res/Fonts/OpenSans/OpenSansRegular.ttf", 30, "Hello, World!", Colour(255, 0, 255));
 };
 
 #endif // NATALIDE_TOOLBAR_H_
