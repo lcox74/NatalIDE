@@ -43,6 +43,8 @@ public:
 	{
 		y = (y < 20) ? 20 : y;
 		clear(clearColour);
+
+		fillCircle(10, 10, 10, Colour(0xFFFFFFFF));
 	}
 
 	Colour clearColour = Colour(0xFF444444);
