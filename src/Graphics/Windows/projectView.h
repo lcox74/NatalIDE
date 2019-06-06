@@ -20,6 +20,7 @@ public:
 
 	void event (Nat_Event *event) override
 	{
+
 		if ((event->x >= this->x && event->x <= this->x + this->width && 
 			event->y >= this->y && event->y <= this->y + this->height) || dragging)
 		{

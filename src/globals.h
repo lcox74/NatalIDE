@@ -27,7 +27,7 @@
 #include "Tools/Nat_Event.h"
 
 #include "Graphics/Colour.h"
-#include "Graphics/Text.h"
+#include "Graphics/Draw.h"
 
 #ifndef NATALIDE_RENDERER_
 #define NATALIDE_RENDERER_
