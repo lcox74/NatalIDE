@@ -23,15 +23,15 @@
 #endif
 
 
-void _fAssert (bool logic, const char *file, int line, const char *func)
+void _fAssert (bool logic, const char *file, int line, const char *func, const char *errorMess)
 {
 	if (!logic)
 	{
 		#ifdef _WIN32
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), RED);
-			std::cout << "FATAL:\n\tFILE : " << file << " \n\tLINE : " << line << " \n\tFUNC : " << func << std::endl;
+			std::cout << "FATAL:\n\tFILE : " << file << " \n\tLINE : " << line << " \n\tFUNC : " << func << "\n\tMESS : " << errorMess << std::endl;
 		#else
-			std::cout << RED << file << ":" << line << RESET << std::endl;
+			std::cout << RED << "FATAL:\n\tFILE : " << file << " \n\tLINE : " << line << " \n\tFUNC : " << func << "\n\tMESS : " << errorMess << RESET << std::endl;
 		#endif
 
 		std::cout << "Press 'Enter' to continue..." << std::endl;
@@ -40,35 +40,39 @@ void _fAssert (bool logic, const char *file, int line, const char *func)
 	}
 }
 
-void _wAssert (bool logic, const char *file, int line, const char *func)
+void _wAssert (bool logic, const char *file, int line, const char *func, const char *errorMess)
 {
 	if (!logic)
 	{
 		#ifdef _WIN32
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), YELLOW);
-			std::cout << "WARN:\n\tFILE : " << file << " \n\tLINE : " << line << " \n\tFUNC : " << func << std::endl;
+			std::cout << "WARN:\n\tFILE : " << file << " \n\tLINE : " << line << " \n\tFUNC : " << func << "\n\tMESS : " << errorMess << std::endl;
 		#else
-			std::cout << YELLOW << "WARN:\n\tFILE : " << file << " \n\tLINE : " << line << " \n\tFUNC : " << func  << RESET << std::endl;
+			std::cout << YELLOW << "WARN:\n\tFILE : " << file << " \n\tLINE : " << line << " \n\tFUNC : " << func << "\n\tMESS : " << errorMess << RESET << std::endl;
 		#endif
 	}
 }
 
-void _lAssert (bool logic, const char *file, int line, const char *func)
+void _lAssert (bool logic, const char *file, int line, const char *func, const char *errorMess)
 {
 	if (!logic)
 	{
 		#ifdef _WIN32
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), CYAN);
-			std::cout << "LOG:\n\tFILE : " << file << " \n\tLINE : " << line << " \n\tFUNC : " << func << std::endl;
+			std::cout << "LOG:\n\tFILE : " << file << " \n\tLINE : " << line << " \n\tFUNC : " << func << "\n\tMESS : " << errorMess << std::endl;
 		#else
-			std::cout << CYAN << "LOG:\n\tFILE : " << file << " \n\tLINE : " << line << " \n\tFUNC : " << func << RESET << std::endl;
+			std::cout << CYAN << "LOG:\n\tFILE : " << file << " \n\tLINE : " << line << " \n\tFUNC : " << func << "\n\tMESS : " << errorMess << RESET << std::endl;
 		#endif
 	}
 }
 
 
-#define FATAL_ASSERT(logic) _fAssert(logic, __FILE__, __LINE__, __PRETTY_FUNCTION__)
-#define WARN_ASSERT(logic) _wAssert(logic, __FILE__, __LINE__, __PRETTY_FUNCTION__)
-#define LOG_ASSERT(logic) _lAssert(logic, __FILE__, __LINE__, __PRETTY_FUNCTION__)
+#define FATAL_ASSERT(logic) _fAssert(logic, __FILE__, __LINE__, __PRETTY_FUNCTION__, "Regular Nat Fatal error Assert")
+#define WARN_ASSERT(logic) _wAssert(logic, __FILE__, __LINE__, __PRETTY_FUNCTION__, "Regular Nat Warning Assert")
+#define LOG_ASSERT(logic) _lAssert(logic, __FILE__, __LINE__, __PRETTY_FUNCTION__, "Regular Nat Log Assert")
+
+#define FATAL_ASSERT_MESS(logic, mess) _fAssert(logic, __FILE__, __LINE__, __PRETTY_FUNCTION__, mess)
+#define WARN_ASSERT_MESS(logic, mess) _wAssert(logic, __FILE__, __LINE__, __PRETTY_FUNCTION__, mess)
+#define LOG_ASSERT_MESS(logic, mess) _lAssert(logic, __FILE__, __LINE__, __PRETTY_FUNCTION__, mess)
 
 #endif // NATALIDE_NAT_ASSERT_H_

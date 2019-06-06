@@ -39,10 +39,10 @@ public:
 				draw(X, Y, c);
 	}
 
-	void drawText (int x1, int y1, const std::string &messageText, int fontSize = 15, Colour c = Colour( 0, 0, 0 ), const std::string &fontPath = "res/Fonts/OpenSans/OpenSansRegular.ttf")
+	void drawText (int x1, int y1, const std::string &messageText, int fontSize = 15, Colour c = Colour( 0xFF000000 ), const std::string &fontPath = "res/Fonts/OpenSans/OpenSansRegular.ttf")
 	{
 		TTF_Font *font = TTF_OpenFont(fontPath.c_str(), fontSize);
-		WARN_ASSERT(font);
+		WARN_ASSERT_MESS(font, TTF_GetError());
 
 		SDL_Color colour = { (Uint8)c.r, (Uint8)c.g, (Uint8)c.b, (Uint8)c.a };
 		SDL_Surface *textSurface = TTF_RenderText_Blended(font, messageText.c_str(), colour);
@@ -60,6 +60,10 @@ public:
 				draw(x1 + x2, y1 + y2, Colour(uPixels[(y2 * textSurface->w) + x2]));
 
 		SDL_FreeSurface(textSurface);
+		SDL_DestroyTexture(textTexture);
+		TTF_CloseFont(font);
+
+		delete uPixels;
 	}
 
 	void drawCircle (int x1, int y1, int r, Colour c)
@@ -83,9 +87,9 @@ public:
             	d += 4 * x0++ + 6;
             else 
             	d += 4 * (x0++ - y0--) + 10;
-
 		}
 	}
+
 
 	void fillCircle (int x1, int y1, int r, Colour c)
 	{

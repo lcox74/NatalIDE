@@ -32,8 +32,12 @@ public:
 	{
 		clear(clearColour);
 
-		
-		drawText(5, 1, "File", 13);
+		drawText(7, 1, "File", 13);
+		drawText(40, 1, "Edit", 13);
+		drawText(75, 1, "Selection", 13);
+		drawText(143, 1, "Find", 13);
+		drawText(185, 1, "View", 13);
+		drawText(225, 1, "Tools", 13);
 	}
 
 	Colour clearColour = Colour(0xFFFFFFFF);

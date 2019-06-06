@@ -86,6 +86,9 @@ int main(int argc, char *argv[])
 	SDL_DestroyRenderer(ren);
 	SDL_DestroyWindow(win);
 
+	delete screen_pixels;
+	delete Nat_event;
+
 	TTF_Quit();
 	IMG_Quit();
 	SDL_Quit();

@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <vector>
 #include <string>
+#include <math.h>
+#include <algorithm>
 
 #ifdef _WIN32
 	#include <iostream>
