@@ -40,7 +40,7 @@ public:
 	~Button() { }
 
 	void Event (Nat_Event *event)
-	{	
+	{	 
 		if ((event->x >= this->x && event->x <= this->x + this->width && 
 			event->y >= this->y && event->y <= this->y + this->height))
 			currentColour = (event->mouseState >= 1) ? click : hover;
@@ -50,7 +50,7 @@ public:
 	void Render ()
 	{
 		fillRect (0, 0, width, height, currentColour);
-		drawText (10, 1, btnText, 13);
+		drawText ((int)(width / 2), (int)(height / 2), btnText, 13, MIDDLE_CENTER_ANCHOR);
 	}
 
 	char const *btnText;

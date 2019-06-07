@@ -10,10 +10,10 @@ public:
 	void DRAW (int x, int y, Colour c)
 	{
 		FATAL_ASSERT(screen_pixels);
-		if (x < 0 || x > SCREEN_WIDTH || y < 0 || y > SCREEN_HEIGHT)
+		if ((x + this->x) < 0 || (x + this->x) > SCREEN_WIDTH || (y + this->y) < 0 || (y + this->y) > SCREEN_HEIGHT)
 			return;
 
-		Colour prev = Colour(screen_pixels[y * SCREEN_WIDTH + x]);
+		Colour prev = Colour(screen_pixels[(y + this->y) * SCREEN_WIDTH + (x + this->x)]);
 
 		float a = (float)c.a / 255;
 		float ca = 1.0f - a;
@@ -23,7 +23,7 @@ public:
 
 		Colour now = Colour(r, g, b);
 
-		screen_pixels[y * SCREEN_WIDTH + x] = now.getUint32();
+		screen_pixels[(y + this->y) * SCREEN_WIDTH + (x + this->x)] = now.getUint32();
 
 	}
 
@@ -35,7 +35,7 @@ public:
 				DRAW(x1 + x2, y1 + y2, c);
 	}
 
-	void drawText (int x1, int y1, const std::string &messageText, int fontSize = 15, Colour c = Colour( 0xFF000000 ), const std::string &fontPath = "res/Fonts/OpenSans/OpenSansRegular.ttf")
+	void drawText (int x1, int y1, const std::string &messageText, int fontSize = 15, int alignment = 0, Colour c = Colour( 0xFF000000 ), const std::string &fontPath = "res/Fonts/OpenSans/OpenSansRegular.ttf")
 	{
 		TTF_Font *font = TTF_OpenFont(fontPath.c_str(), fontSize);
 		WARN_ASSERT_MESS(font, TTF_GetError());
@@ -51,9 +51,57 @@ public:
 		SDL_LockTexture(textTexture, &textSurface->clip_rect, &pixels, &textSurface->pitch);
 		Uint32 * uPixels = (Uint32 *) textSurface->pixels;
 
-		for (int x2 = 0; x2 < textSurface->w; x2++)
-			for (int y2 = 0; y2 < textSurface->h; y2++)
-				DRAW(x1 + x2, y1 + y2, Colour(uPixels[(y2 * textSurface->w) + x2]));
+		switch (alignment)
+		{
+			// Top
+			case 0: // Left
+				for (int x2 = 0; x2 < textSurface->w; x2++)
+					for (int y2 = 0; y2 < textSurface->h; y2++)
+						DRAW(x1 + x2, y1 + y2, Colour(uPixels[(y2 * textSurface->w) + x2]));
+				break;
+			case 1: // Centered
+				for (int x2 = 0; x2 < textSurface->w; x2++)
+					for (int y2 = 0; y2 < textSurface->h; y2++)
+						DRAW((x1 + x2) - (int)((float)textSurface->w / 2.0f), y1 + y2, Colour(uPixels[(y2 * textSurface->w) + x2]));
+				break;
+			case 2: // Right
+				for (int x2 = 0; x2 < textSurface->w; x2++)
+					for (int y2 = 0; y2 < textSurface->h; y2++)
+						DRAW(x1 + x2 - textSurface->w, y1 + y2, Colour(uPixels[(y2 * textSurface->w) + x2]));
+				break;
+			// Middle
+			case 3: // Left
+				for (int x2 = 0; x2 < textSurface->w; x2++)
+					for (int y2 = 0; y2 < textSurface->h; y2++)
+						DRAW(x1 + x2, y1 + y2 - (int)((float)textSurface->h / 2.0f), Colour(uPixels[(y2 * textSurface->w) + x2]));
+				break;
+			case 4: // Centered
+				for (int x2 = 0; x2 < textSurface->w; x2++)
+					for (int y2 = 0; y2 < textSurface->h; y2++)
+						DRAW((x1 + x2) - (int)((float)textSurface->w / 2.0f), y1 + y2 - (int)((float)textSurface->h / 2.0f), Colour(uPixels[(y2 * textSurface->w) + x2]));
+				break;
+			case 5: // Right
+				for (int x2 = 0; x2 < textSurface->w; x2++)
+					for (int y2 = 0; y2 < textSurface->h; y2++)
+						DRAW(x1 + x2 - textSurface->w, y1 + y2 - (int)((float)textSurface->h / 2.0f), Colour(uPixels[(y2 * textSurface->w) + x2]));
+				break;
+			// Bottom
+			case 6: // Left
+				for (int x2 = 0; x2 < textSurface->w; x2++)
+					for (int y2 = 0; y2 < textSurface->h; y2++)
+						DRAW(x1 + x2, y1 + y2 - textSurface->h, Colour(uPixels[(y2 * textSurface->w) + x2]));
+				break;
+			case 7: // Centered
+				for (int x2 = 0; x2 < textSurface->w; x2++)
+					for (int y2 = 0; y2 < textSurface->h; y2++)
+						DRAW((x1 + x2) - (int)((float)textSurface->w / 2.0f), y1 + y2 - textSurface->h, Colour(uPixels[(y2 * textSurface->w) + x2]));
+				break;
+			case 8: // Right
+				for (int x2 = 0; x2 < textSurface->w; x2++)
+					for (int y2 = 0; y2 < textSurface->h; y2++)
+						DRAW(x1 + x2 - textSurface->w, y1 + y2 - textSurface->h, Colour(uPixels[(y2 * textSurface->w) + x2]));
+				break;
+		}
 
 		SDL_FreeSurface(textSurface);
 		SDL_DestroyTexture(textTexture);
