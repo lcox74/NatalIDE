@@ -7,7 +7,7 @@
 class Button : public Item
 {
 public:
-	Button() 
+	Button () 
 	{
 		this->x = 0;
 		this->y = 0;
@@ -21,7 +21,7 @@ public:
 		this->hover = Colour(0xFFE5F3FF);
 		this->click = Colour(0xFFCCE8FF);
 	}
-	Button(Uint32 *screenPixels, char const *text, int x1, int y1, int w1, int h1, Colour nColour = Colour(0xFFFFFFFF), Colour hColour = Colour(0xFFE5F3FF), Colour cColour = Colour(0xFFCCE8FF)) 
+	Button (Uint32 *screenPixels, char const *text, int x1, int y1, int w1, int h1, Colour nColour = Colour(0xFFFFFFFF), Colour hColour = Colour(0xFFE5F3FF), Colour cColour = Colour(0xFFCCE8FF)) 
 	{
 		this->x = x1;
 		this->y = y1;
@@ -37,7 +37,7 @@ public:
 
 		this->screen_pixels = screenPixels;
 	}
-	~Button() { }
+	~Button () { }
 
 	void Event (Nat_Event *event)
 	{	 

@@ -2,7 +2,6 @@
 #define NATALIDE_ITEM_H_
 
 #include "globals.h"
-#include "../Draw.h"
 
 class Item
 {
