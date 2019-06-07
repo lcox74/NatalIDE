@@ -29,6 +29,8 @@
 #include "Graphics/Colour.h"
 #include "Graphics/Draw.h"
 
+#include "Graphics/gui/Button.h"
+
 #ifndef NATALIDE_RENDERER_
 #define NATALIDE_RENDERER_
 	static SDL_Renderer *ren;

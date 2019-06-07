@@ -3,7 +3,7 @@
 
 #include "globals.h"
 
-void DRAW (Uint32 *screen, int x, int y, Colour c)
+static void DRAW (Uint32 *screen, int x, int y, Colour c)
 {
 	FATAL_ASSERT(screen);
 	if (x < 0 || x > SCREEN_WIDTH || y < 0 || y > SCREEN_HEIGHT)
@@ -20,7 +20,7 @@ void DRAW (Uint32 *screen, int x, int y, Colour c)
 	screen[y * SCREEN_WIDTH + x] = now.getUint32();
 }
 
-void DRAWLINE (Uint32 *screen, int x1, int y1, int x2, int y2, Colour c)
+static void DRAWLINE (Uint32 *screen, int x1, int y1, int x2, int y2, Colour c)
 {
 	int x, y, dx, dy, dx1, dy1, px, py, xe, ye, i;
     dx = x2 - x1;
@@ -84,28 +84,28 @@ void DRAWLINE (Uint32 *screen, int x1, int y1, int x2, int y2, Colour c)
 
 }
 
-void DRAWRECT (Uint32 *screen, int x, int y, int w, int h, Colour c)
+static void DRAWRECT (Uint32 *screen, int x, int y, int w, int h, Colour c)
 {
 	DRAWLINE(screen, x    , y    , x + w, y    , c);
 	DRAWLINE(screen, x    , y + h, x + w, y + h, c);
 	DRAWLINE(screen, x    , y    , x    , y    , c);
 	DRAWLINE(screen, x + w, y    , x + w, y + h, c);
 }
-void FILLRECT (Uint32 *screen, int x, int y, int w, int h, Colour c)
+static void FILLRECT (Uint32 *screen, int x, int y, int w, int h, Colour c)
 {
 	for (int x1 = 0; x1 < w; x1++)
 		for (int y1 = 0; y1 < h; y1++)
 			DRAW(screen, x + x1, y + y1, c);
 }
 
-void DRAWTRIANGLE (Uint32 *screen, int x, int y, int x1, int y1, int x2, int y2, Colour c)
+static void DRAWTRIANGLE (Uint32 *screen, int x, int y, int x1, int y1, int x2, int y2, Colour c)
 {
 	DRAWLINE(screen, x, y, x1, y1, c);
 	DRAWLINE(screen, x, y, x2, y2, c);
 	DRAWLINE(screen, x1, y1, x2, y2, c);
 }
 // https://www.avrfreaks.net/sites/default/files/triangles.c
-void FILLTRIANGLE (Uint32 *screen, int x1, int y1, int x2, int y2, int x3, int y3, Colour c)
+static void FILLTRIANGLE (Uint32 *screen, int x1, int y1, int x2, int y2, int x3, int y3, Colour c)
 {
     auto SWAP = [](int &x, int &y) { int t = x; x = y; y = t; };
     auto drawline = [&](int sx, int ex, int ny) { for (int i = sx; i <= ex; i++) DRAW (screen, i, ny, c); };
@@ -244,7 +244,7 @@ next4:
     }
 }
 
-void DRAWCIRCLE (Uint32 *screen, int x1, int y1, int r, Colour c)
+static void DRAWCIRCLE (Uint32 *screen, int x1, int y1, int r, Colour c)
 {
 	int x0 = 0;
 	int y0 = r;
@@ -268,7 +268,7 @@ void DRAWCIRCLE (Uint32 *screen, int x1, int y1, int r, Colour c)
 	}
 }
 
-void FILLCIRCLE (Uint32 *screen, int x1, int y1, int r, Colour c)
+static void FILLCIRCLE (Uint32 *screen, int x1, int y1, int r, Colour c)
 {
 	int x0 = 0;
     int y0 = r;
@@ -294,7 +294,7 @@ void FILLCIRCLE (Uint32 *screen, int x1, int y1, int r, Colour c)
     }
 }
 
-void DRAWTEXT (Uint32 *screen, int x1, int y1, const std::string &messageText, int fontSize = 15, Colour c = Colour( 0xFF000000 ), const std::string &fontPath = "res/Fonts/OpenSans/OpenSansRegular.ttf")
+static void DRAWTEXT (Uint32 *screen, int x1, int y1, const std::string &messageText, int fontSize = 15, Colour c = Colour( 0xFF000000 ), const std::string &fontPath = "res/Fonts/OpenSans/OpenSansRegular.ttf")
 	{
 		TTF_Font *font = TTF_OpenFont(fontPath.c_str(), fontSize);
 		WARN_ASSERT_MESS(font, TTF_GetError());

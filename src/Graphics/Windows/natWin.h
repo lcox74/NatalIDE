@@ -59,7 +59,7 @@ public:
 
 	char const *sName;
 	int x, y, width, height;
-	Uint32 *screen_pixels;
+	Uint32 *screen_pixels = nullptr;
 
 };
 

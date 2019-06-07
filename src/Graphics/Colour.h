@@ -7,7 +7,7 @@ public:
 	Colour(int R, int G, int B, int A = 255)
 		: r(R), g(G), b(B) { }
 
-	Colour(Uint32 hex) 
+	Colour(Uint32 hex = 0xFFFFFFFF) 
 	{
 		a = (hex & 0xFF000000) >> 24;
 		r = (hex & 0x00FF0000) >> 16;
